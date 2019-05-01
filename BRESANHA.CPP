@@ -1,0 +1,70 @@
+#include <graphics.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include<iostream.h>
+#include<math.h>
+#include<conio.h>
+
+void main()
+{
+	/* request auto detection */
+	int gdriver = DETECT, gmode, errorcode;
+	int x1,x2,y1,y2;
+	float m;
+
+	/* initialize graphics and local variables */
+	initgraph(&gdriver, &gmode, "..\\bgi");
+
+	/* read result of initialization */
+	errorcode = graphresult();
+	/* an error occurred */
+	if (errorcode != grOk)
+	{
+		printf("Graphics error: %s\n", grapherrormsg(errorcode));
+		printf("Press any key to halt:");
+		getch();
+		exit(1);
+	}
+
+	cout<<"\nEnter x1: ";
+	cin>>x1;
+	cout<<"\nEnter x2: ";
+	cin>>x2;
+	cout<<"\nEnter y1: ";
+	cin>>y1;
+	cout<<"\nEnter y2: ";
+	cin>>y2;
+
+	int dx=x2-x1;
+	int dy=y2-y1;
+	int d=(2*dy)-dx;    		  //d0=2a+b where a=dy,b=-dx,c=Bdx
+	int E=2*dy;          	 //E=2*a
+	int NE=2*(dy-dx);  	        //NE=2a+2b
+
+	m=(dy)/(float)(dx);
+
+	putpixel(x1,y1,RED);        //plotting of the starting pixel
+
+	if(abs(m)<1)
+	{
+	while(x1<x2)
+	{
+		if(d<=0)
+		{
+			d+=E;
+			x1++;
+
+		}
+		else
+		{
+			d+=NE;
+			x1++;
+			y1++;
+		}
+		putpixel(x1,y1,RED);
+	}
+	}
+	/* clean up */
+	getch();
+	closegraph();
+}
